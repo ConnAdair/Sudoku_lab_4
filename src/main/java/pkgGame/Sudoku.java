@@ -416,14 +416,20 @@ public class Sudoku extends LatinSquare {
 	}
 	
 	private boolean fillRemaining(int iRow, int iCol) {
+		int[][] newPuzzle = getPuzzle();
+		for (int num : getAllValidCellValues(iCol, iRow)) {
+			newPuzzle[iRow][iCol] = num;
 		
-		if (iRow == iSize) {
-			
+			if (iRow == iSize && iCol == iSize) {
+				break;
+			}
+			else if (iCol + 1 > iSize && iRow < iSize) {
+				fillRemaining(iRow + 1, 0);
+			}
+			else {
+				fillRemaining(iRow + 1, iCol + 1);
+			}
 		}
-		else if (iCol + 1 > iSize && iRow < iSize) {
-			fillRemaining(iRow + 1, 0);
-		}
-		
-		return false;
+		return true;
 	}
 }
